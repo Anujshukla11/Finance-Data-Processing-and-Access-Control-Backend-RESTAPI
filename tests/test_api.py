@@ -37,13 +37,11 @@ ADMIN_HEADER   = {"user-id": "3"}
 # 1. ROOT ENDPOINT
 # ==================================================================
 class TestRootEndpoint:
-    def test_root_returns_welcome_message(self):
-        """The root endpoint should return a welcome JSON message."""
-        response = client.get("/")
-        assert response.status_code == 200
-        data = response.json()
-        assert "message" in data
-        assert "Finance Dashboard API" in data["message"]
+    def test_root_redirects_to_docs(self):
+        """The root endpoint should redirect users to the /docs page."""
+        response = client.get("/", follow_redirects=False)
+        assert response.status_code in [301, 302, 307]
+        assert "/docs" in response.headers["location"]
 
 
 # ==================================================================

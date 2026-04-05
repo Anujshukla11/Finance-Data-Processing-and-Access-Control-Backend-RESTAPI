@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from app.database.setup import initialize_db
 from app.routers import records, dashboard
 
@@ -19,4 +20,4 @@ def startup_event():
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Finance Dashboard API! Go to /docs for the API Documentation."}
+    return RedirectResponse(url="/docs")
